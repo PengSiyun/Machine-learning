@@ -86,3 +86,103 @@ def menu_is_boring(meals):
         if meals[i] == meals[i+1]:
             return True #return ends loop
     return False
+
+#########################################
+#Strings and Dictionaries
+#########################################
+#####use of \
+# \' ->	'	e.g. 'What\'s up?'	What's up?
+# \" ->	"	e.g. "That's \"cool\""	That's "cool"
+# \\ ->	\	e.g. "Look, a mountain: /\\"	Look, a mountain: /\
+# \n  -> start a new line
+
+#triple quote syntax for strings lets us include newlines literally (i.e. by just hitting 'Enter' on our keyboard, rather than using the special '\n' sequence).
+triplequoted_hello = """hello
+world"""
+print(triplequoted_hello)
+
+###### Indexing
+planet = 'Pluto'
+planet[0]
+planet[-3:]
+#loop over them
+[x+'! ' for x in planet]
+# ALL CAPS
+planet.upper()
+# Searching for the first index of a substring
+planet.index('o')
+
+##### Going between strings and lists: .split() and .join()
+# str.split() turns a string into a list of smaller strings, breaking on
+# whitespace by default. This is super useful for taking you from one 
+# big string to a list of words.
+claim = "Pluto is a planet!"
+words = claim.split()
+words
+#Occasionally you'll want to split on something other than whitespace:
+datestr = '1956-01-31'
+year, month, day = datestr.split('-')
+# str.join() takes us in the other direction, sewing a list of strings up 
+# into one long string, using the string it was called on as a separator.
+'/'.join([month, day, year])
+position = 9
+planet + ", you'll always be the " + position + "th planet to me."
+planet + ", you'll always be the " + str(position) + "th planet to me."
+#alternative: str.format()
+"{}, you'll always be the {}th planet to me.".format(planet, position)
+#other function of str.format()
+pluto_mass = 1.303 * 10**22
+earth_mass = 5.9722 * 10**24
+population = 52910390
+#2 decimal points 3 decimal points, format as percent     separate with commas
+"{} weighs about {:.2} kilograms ({:.3%} of Earth's mass). It is home to {:,} Plutonians.".format(
+    planet, pluto_mass, pluto_mass / earth_mass, population,
+)
+# Referring to format() arguments by index, starting from 0
+s = """Pluto's a {0}.
+No, it's a {1}.
+{0}!
+{1}!""".format('planet', 'dwarf planet')
+print(s)
+
+#####Dictionaries: for mapping keys to values
+numbers = {'one':1, 'two':2, 'three':3}
+numbers['one']
+# add another key, value pair
+numbers['eleven'] = 11
+numbers
+# get initial of every planet in the list
+planets = ['Mercury', 'Venus', 'Earth', 'Mars', 'Jupiter', 'Saturn', 'Uranus', 'Neptune']
+planet_to_initial = {x: x[0] for x in planets}
+planet_to_initial
+# in operator tells us whether something is a key in the dictionary
+'Saturn' in planet_to_initial
+# A for loop over a dictionary will loop over its keys
+for k in numbers:
+    print("{} = {}".format(k, numbers[k]))
+#We can access a collection of all the keys or all the values with dict.keys() and dict.values()
+# Get all the initials, sort them alphabetically, and put them in a space-separated string.
+' '.join(sorted(planet_to_initial.values()))
+# The very useful dict.items() method lets us iterate over the keys and values of a dictionary simultaneously. (In Python jargon, an item refers to a key, value pair)
+for planet, initial in planet_to_initial.items():
+    print("{} begins with \"{}\"".format(planet.rjust(10), initial))
+
+#####practice
+#Returns whether the input string is a valid (5 digit) zip code
+def is_valid_zip(zip_str):
+    return len(zip_str) == 5 and zip_str.isdigit()
+
+def word_search(documents, keyword):
+    # list to hold the indices of matching documents
+    indices = [] 
+    # Iterate through the indices (i) and elements (doc) of documents
+    for i, doc in enumerate(documents):
+        # Split the string doc into a list of words (according to whitespace)
+        tokens = doc.split()
+        # Make a transformed list where we 'normalize' each word to facilitate matching.
+        # Periods and commas are removed from the end of each word, and it's set to all lowercase.
+        normalized = [token.rstrip('.,').lower() for token in tokens]
+        # Is there a match? If so, update the list of matching indices.
+        if keyword.lower() in normalized:
+            indices.append(i)
+    return indices
