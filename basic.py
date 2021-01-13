@@ -186,3 +186,15 @@ def word_search(documents, keyword):
         if keyword.lower() in normalized:
             indices.append(i)
     return indices
+
+#########################################
+#Working with External Libraries
+#########################################
+#Three tools for understanding strange objects
+#1: type() (what is this thing?)
+#2: dir() (what can I do with it?)
+#3: help() (tell me more)
+
+
+
+
